@@ -1,4 +1,4 @@
--- UNIVERSAL HUB SCRIPT (execute this)
+-- EXECUTA ESTE SCRIPT (el único que corres)
 local AP6 = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ap6ykx3/AP6Library/refs/heads/main/AP6Library.lua"))()
 
 local supportedGames = {
@@ -8,4 +8,4 @@ local supportedGames = {
     [120390407164140] = {name = "+$1 Every Correct Glass", status = "READY", url = "https://raw.githubusercontent.com/Ap6ykx3/APHUB--1-000-Every-Collect-Glass/main/EveryCorrectGlass.lua"}
 }
 
-AP6:Initialize(supportedGames)
+AP6:Init(supportedGames)
