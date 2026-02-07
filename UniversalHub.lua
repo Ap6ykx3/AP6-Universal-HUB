@@ -9,6 +9,7 @@ local GameDatabase = {
         name = "Millonaire Empire Tycoon", 
         url = "https://raw.githubusercontent.com/Ap6ykx3/APHUB-Millonaire-Empire-Tycoon/main/Millonaire%20Empire%20Tycoon.lua",
         onExecute = function()
+            
             AP6:Notify("MONEY INJECTOR", "1000.0Q+ simulated to your balance.", 5)
         end
     },
