@@ -1,235 +1,119 @@
--- [[ AP6 TERMINATOR UNIVERSAL - ULTIMATE EDITION ]] --
--- Creado con precisión para AP6. Sin errores, sin fallos.
+local AP6Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ap6ykx3/AP6Library/refs/heads/main/AP6Library.lua"))()
 
-local TweenService = game:GetService("TweenService")
-local Players = game:GetService("Players")
-local Player = Players.LocalPlayer
-local PlayerGui = Player:WaitForChild("PlayerGui")
-
--- 1. CONFIGURACIÓN DE LA LIBRERÍA (NÚCLEO AP6)
-local AP6 = {
-    Colors = {
-        Background = Color3.fromRGB(10, 10, 12),
-        Secondary = Color3.fromRGB(15, 15, 18),
-        Primary = Color3.fromRGB(255, 0, 45), -- Rojo AP6
-        Accent = Color3.fromRGB(200, 0, 0),
-        Text = Color3.fromRGB(255, 255, 255),
-        Grey = Color3.fromRGB(150, 150, 150)
-    },
-    Sounds = {
-        Notify = "rbxassetid://6518811702",
-        Click = "rbxassetid://6895079853",
-        Hover = "rbxassetid://8739001153",
-        Load = "rbxassetid://138090596"
-    }
-}
-
--- Función para Sonidos
-function AP6:PlaySound(id)
-    local s = Instance.new("Sound", game.Workspace)
-    s.SoundId = id
-    s.Volume = 0.5
-    s:Play()
-    game:GetService("Debris"):AddItem(s, 2)
-end
-
--- 🛡️ FUNCIÓN DE SEGURIDAD (La que te fallaba)
-function AP6:CheckKey(input, success, fail)
-    local correctKey = "Ap6S"
-    if input == correctKey then
-        success()
-    else
-        fail()
-    end
-end
-
--- 🔔 SISTEMA DE NOTIFICACIONES MEJORADO
-function AP6:Notify(title, text, time)
-    AP6:PlaySound(AP6.Sounds.Notify)
-    local g = PlayerGui:FindFirstChild("AP6_UI") or Instance.new("ScreenGui", PlayerGui)
-    g.Name = "AP6_UI"
-    
-    local holder = g:FindFirstChild("NotifyHolder") or Instance.new("Frame", g)
-    if not holder:IsA("Frame") then
-        holder = Instance.new("Frame", g)
-        holder.Name = "NotifyHolder"
-        holder.Size = UDim2.new(0, 300, 1, -40)
-        holder.Position = UDim2.new(1, -310, 0, 20)
-        holder.BackgroundTransparency = 1
-        local l = Instance.new("UIListLayout", holder)
-        l.VerticalAlignment = Enum.VerticalAlignment.Bottom
-        l.Padding = UDim.new(0, 10)
-    end
-
-    local f = Instance.new("Frame", holder)
-    f.Size = UDim2.new(0, 0, 0, 75)
-    f.BackgroundColor3 = AP6.Colors.Background
-    f.ClipsDescendants = true
-    Instance.new("UICorner", f).CornerRadius = UDim.new(0, 6)
-    local s = Instance.new("UIStroke", f)
-    s.Color = AP6.Colors.Primary
-    s.Thickness = 1.5
-
-    local t = Instance.new("TextLabel", f)
-    t.Size = UDim2.new(1, -20, 0, 25)
-    t.Position = UDim2.new(0, 12, 0, 8)
-    t.Text = title:upper()
-    t.TextColor3 = AP6.Colors.Primary
-    t.Font = Enum.Font.GothamBlack
-    t.TextSize = 14
-    t.TextXAlignment = Enum.TextXAlignment.Left
-    t.BackgroundTransparency = 1
-
-    local d = Instance.new("TextLabel", f)
-    d.Size = UDim2.new(1, -20, 0, 35)
-    d.Position = UDim2.new(0, 12, 0, 32)
-    d.Text = text
-    d.TextColor3 = AP6.Colors.Text
-    d.Font = Enum.Font.GothamMedium
-    d.TextSize = 12
-    d.TextWrapped = true
-    d.TextXAlignment = Enum.TextXAlignment.Left
-    d.BackgroundTransparency = 1
-
-    TweenService:Create(f, TweenInfo.new(0.5, Enum.EasingStyle.Back), {Size = UDim2.new(1, 0, 0, 75)}):Play()
-    task.delay(time or 4, function()
-        TweenService:Create(f, TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.In), {Size = UDim2.new(0, 0, 0, 75), BackgroundTransparency = 1}):Play()
-        task.wait(0.5)
-        f:Destroy()
-    end)
-end
-
--- 🚀 PANTALLA DE CARGA AP6 (IMPECABLE)
-function AP6:Loading(callback)
-    local g = Instance.new("ScreenGui", PlayerGui)
-    local f = Instance.new("Frame", g)
-    f.Size = UDim2.new(1, 0, 1, 0)
-    f.BackgroundColor3 = Color3.fromRGB(5, 5, 7)
-    
-    local logo = Instance.new("TextLabel", f)
-    logo.Size = UDim2.new(0, 200, 0, 50)
-    logo.Position = UDim2.new(0.5, -100, 0.45, -25)
-    logo.Text = "AP6 TERMINATOR"
-    logo.Font = Enum.Font.GothamBlack
-    logo.TextSize = 30
-    logo.TextColor3 = AP6.Colors.Text
-    logo.BackgroundTransparency = 1
-    
-    local line = Instance.new("Frame", f)
-    line.Size = UDim2.new(0, 0, 0, 2)
-    line.Position = UDim2.new(0.5, -100, 0.5, 10)
-    line.BackgroundColor3 = AP6.Colors.Primary
-    line.BorderSizePixel = 0
-
-    AP6:PlaySound(AP6.Sounds.Load)
-    
-    TweenService:Create(line, TweenInfo.new(2, Enum.EasingStyle.Quart), {Size = UDim2.new(0, 200, 0, 2)}):Play()
-    task.wait(2.2)
-    TweenService:Create(f, TweenInfo.new(0.5), {BackgroundTransparency = 1}):Play()
-    TweenService:Create(logo, TweenInfo.new(0.5), {TextTransparency = 1}):Play()
-    TweenService:Create(line, TweenInfo.new(0.5), {BackgroundTransparency = 1}):Play()
-    task.wait(0.5)
-    g:Destroy()
-    callback()
-end
-
--- 2. LÓGICA DEL UNIVERSAL HUB
 local supportedGames = {
-    [73904017172892] = { name = "Roll In A Cart", url = "https://raw.githubusercontent.com/Ap6ykx3/AP6-HUB/main/Roll%20In%20A%20Cart.lua" },
-    [130850206307448] = { name = "Blox Flipper", url = "https://raw.githubusercontent.com/Ap6ykx3/APHUB-BloxFlipper/main/BloxFlipper.lua" },
-    [6677985923] = { name = "Millonaire Empire Tycoon", url = "https://raw.githubusercontent.com/Ap6ykx3/APHUB-Millonaire-Empire-Tycoon/main/script.lua" },
-    [120390407164140] = { name = "+$1 Every Correct Glass", url = "https://raw.githubusercontent.com/Ap6ykx3/APHUB--1-000-Every-Collect-Glass/main/EveryCorrectGlass.lua" }
+    [73904017172892] = { name = "Roll In A Cart", status = "Ready", url = "https://raw.githubusercontent.com/Ap6ykx3/AP6-HUB/main/Roll%20In%20A%20Cart%20(SIMPLE%20AUTO%20CASH).lua" },
+    [130850206307448] = { name = "Blox Flipper", status = "Ready", url = "https://raw.githubusercontent.com/Ap6ykx3/APHUB-BloxFlipper/main/BloxFlipper.lua" },
+    [6677985923] = { name = "Millonaire Empire Tycoon", status = "Ready", url = "https://raw.githubusercontent.com/Ap6ykx3/APHUB-Millonaire-Empire-Tycoon/main/Millonaire%20Empire%20Tycoon.lua" },
+    [120390407164140] = { name = "+$1 Every Correct Glass", status = "Ready", url = "https://raw.githubusercontent.com/Ap6ykx3/APHUB--1-000-Every-Collect-Glass/main/EveryCorrectGlass.lua" }
 }
 
--- INICIO DEL SISTEMA
-AP6:Loading(function()
-    AP6:CheckKey("Ap6S", function()
-        -- ACCESO CONCEDIDO
-        AP6:Notify("SYSTEM", "User Authenticated. Loading Hub...", 3)
-        
-        local Gui = Instance.new("ScreenGui", PlayerGui)
-        Gui.Name = "AP6UniversalHub"
+AP6Lib:Loading(function()
+    AP6Lib:CheckKey("Ap6S", function()
+        local Hub = Instance.new("ScreenGui", PlayerGui)
+        Hub.Name = "AP6UniversalHub"
+        Hub.ResetOnSpawn = false
 
-        local Main = Instance.new("Frame", Gui)
-        Main.Size = UDim2.new(0, 480, 0, 380)
-        Main.Position = UDim2.new(0.5, -240, 0.5, -190)
-        Main.BackgroundColor3 = AP6.Colors.Background
-        Main.BorderSizePixel = 0
-        Main.Active = true
-        Main.Draggable = true
-        Instance.new("UICorner", Main).CornerRadius = UDim.new(0, 10)
-        local s = Instance.new("UIStroke", Main)
-        s.Color = AP6.Colors.Primary
-        s.Thickness = 2
-        s.Transparency = 0.3
+        local Main = Instance.new("Frame", Hub)
+        Main.Size = UDim2.new(0, 430, 0, 390)
+        Main.Position = UDim2.new(0.5, -215, 0.5, -195)
+        Main.BackgroundColor3 = AP6Lib.Colors.Background
+        Instance.new("UICorner", Main).CornerRadius = UDim.new(0, 16)
+        local stroke = Instance.new("UIStroke", Main)
+        stroke.Color = AP6Lib.Colors.Primary
+        stroke.Thickness = 3
 
-        -- Cabecera
         local Top = Instance.new("Frame", Main)
-        Top.Size = UDim2.new(1, 0, 0, 50)
-        Top.BackgroundColor3 = AP6.Colors.Secondary
-        Instance.new("UICorner", Top)
-        
+        Top.Size = UDim2.new(1, 0, 0, 54)
+        Top.BackgroundColor3 = AP6Lib.Colors.Secondary
+        Instance.new("UICorner", Top).CornerRadius = UDim.new(0, 16)
         local Title = Instance.new("TextLabel", Top)
         Title.Size = UDim2.new(1, -20, 1, 0)
-        Title.Position = UDim2.new(0, 15, 0, 0)
-        Title.Text = "AP6 UNIVERSAL <font color='#FF002D'>TERMINATOR</font>"
+        Title.Position = UDim2.new(0, 20, 0, 0)
+        Title.BackgroundTransparency = 1
+        Title.Text = 'AP6 <font color="#FF002D">TERMINATOR</font>'
         Title.RichText = true
         Title.Font = Enum.Font.GothamBlack
-        Title.TextSize = 18
+        Title.TextSize = 22
         Title.TextColor3 = Color3.new(1,1,1)
         Title.TextXAlignment = Enum.TextXAlignment.Left
-        Title.BackgroundTransparency = 1
 
-        -- Lista de Juegos
+        local Close = Instance.new("TextButton", Top)
+        Close.Size = UDim2.new(0, 34, 0, 34)
+        Close.Position = UDim2.new(1, -40, 0, 10)
+        Close.BackgroundTransparency = 1
+        Close.Text = "✕"
+        Close.TextColor3 = AP6Lib.Colors.Primary
+        Close.Font = Enum.Font.GothamBold
+        Close.TextSize = 24
+        Close.MouseButton1Click:Connect(function()
+            AP6Lib:PlaySound(AP6Lib.Sounds.Click)
+            Hub:Destroy()
+        end)
+
+        AP6Lib:MakeDraggable(Main)
+        AP6Lib:BindToggle(Main)
+        AP6Lib:FadeIn(Main, 0.9)
+
         local Scroll = Instance.new("ScrollingFrame", Main)
-        Scroll.Size = UDim2.new(1, -30, 1, -70)
-        Scroll.Position = UDim2.new(0, 15, 0, 60)
+        Scroll.Size = UDim2.new(1, -30, 1, -90)
+        Scroll.Position = UDim2.new(0, 15, 0, 70)
         Scroll.BackgroundTransparency = 1
-        Scroll.BorderSizePixel = 0
-        Scroll.ScrollBarThickness = 2
-        Scroll.ScrollBarImageColor3 = AP6.Colors.Primary
-        
+        Scroll.ScrollBarThickness = 5
+        Scroll.ScrollBarImageColor3 = AP6Lib.Colors.Primary
         local Layout = Instance.new("UIListLayout", Scroll)
-        Layout.Padding = UDim.new(0, 8)
+        Layout.Padding = UDim.new(0, 14)
 
-        for id, info in pairs(supportedGames) do
-            local isCurrent = (game.PlaceId == id)
+        local current = game.PlaceId
+        for id, data in pairs(supportedGames) do
             local btn = Instance.new("TextButton", Scroll)
-            btn.Size = UDim2.new(1, -10, 0, 45)
-            btn.BackgroundColor3 = isCurrent and Color3.fromRGB(20, 20, 25) or AP6.Colors.Secondary
-            btn.Text = "  " .. info.name:upper()
-            btn.Font = Enum.Font.GothamBold
-            btn.TextSize = 12
-            btn.TextColor3 = isCurrent and Color3.new(1,1,1) or AP6.Colors.Grey
-            btn.TextXAlignment = Enum.TextXAlignment.Left
-            Instance.new("UICorner", btn)
-            local bS = Instance.new("UIStroke", btn)
-            bS.Color = isCurrent and AP6.Colors.Primary or Color3.fromRGB(40,40,40)
+            btn.Size = UDim2.new(1, 0, 0, 56)
+            btn.BackgroundColor3 = AP6Lib.Colors.Secondary
+            btn.Text = ""
+            Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 12)
+            local s = Instance.new("UIStroke", btn)
+            s.Color = AP6Lib.Colors.Grey
+            s.Thickness = 1.8
 
-            btn.MouseEnter:Connect(function() 
-                AP6:PlaySound(AP6.Sounds.Hover)
-                TweenService:Create(bS, TweenInfo.new(0.2), {Color = AP6.Colors.Primary, Thickness = 2}):Play()
+            local icon = Instance.new("TextLabel", btn)
+            icon.Size = UDim2.new(0, 50, 1, 0)
+            icon.BackgroundTransparency = 1
+            icon.Text = (id == current and data.status == "Ready") and AP6Lib.Icons.Ready or AP6Lib.Icons.NotInGame
+            icon.TextSize = 32
+            icon.Font = Enum.Font.GothamBold
+
+            local name = Instance.new("TextLabel", btn)
+            name.Size = UDim2.new(1, -70, 1, 0)
+            name.Position = UDim2.new(0, 60, 0, 0)
+            name.BackgroundTransparency = 1
+            name.Text = data.name
+            name.TextColor3 = id == current and AP6Lib.Colors.Text or AP6Lib.Colors.Grey
+            name.Font = Enum.Font.GothamBold
+            name.TextSize = 17
+            name.TextXAlignment = Enum.TextXAlignment.Left
+
+            btn.MouseEnter:Connect(function()
+                AP6Lib:PlaySound(AP6Lib.Sounds.Hover)
+                TweenService:Create(s, TweenInfo.new(0.25), {Color = AP6Lib.Colors.Primary, Thickness = 2.5}):Play()
             end)
-            btn.MouseLeave:Connect(function() 
-                if not isCurrent then TweenService:Create(bS, TweenInfo.new(0.2), {Color = Color3.fromRGB(40,40,40), Thickness = 1}):Play() end
+            btn.MouseLeave:Connect(function()
+                TweenService:Create(s, TweenInfo.new(0.25), {Color = AP6Lib.Colors.Grey, Thickness = 1.8}):Play()
             end)
 
             btn.MouseButton1Click:Connect(function()
-                AP6:PlaySound(AP6.Sounds.Click)
-                if isCurrent then
-                    AP6:Notify("TERMINATOR", "Injecting " .. info.name, 4)
-                    Gui:Destroy()
-                    loadstring(game:HttpGet(info.url))()
+                AP6Lib:PlaySound(AP6Lib.Sounds.Click)
+                if id == current and data.status == "Ready" then
+                    AP6Lib:Notify("INJECTING", data.name, 3)
+                    task.wait(1.2)
+                    Hub:Destroy()
+                    loadstring(game:HttpGet(data.url))()
                 else
-                    AP6:Notify("DENIED", "Game mismatch. Access locked.", 3)
+                    AP6Lib:Notify("DENIED", "No estás en este juego o no está listo.", 4)
                 end
             end)
         end
-        
-        Scroll.CanvasSize = UDim2.new(0,0,0, Layout.AbsoluteContentSize.Y + 20)
 
+        Scroll.CanvasSize = UDim2.new(0, 0, 0, Layout.AbsoluteContentSize.Y + 30)
     end, function()
-        -- FALLO DE LLAVE
-        AP6:Notify("SECURITY", "Invalid Key. Connection Terminated.", 5)
+        AP6Lib:Notify("ACCESS DENIED", "Llave inválida. Conexión terminada.", 6)
     end)
 end)
