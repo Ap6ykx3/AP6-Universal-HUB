@@ -1,6 +1,6 @@
 local AP6 = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ap6ykx3/AP6Library/refs/heads/main/AP6Library.lua"))()
 
-local GameData = {
+local Database = {
     [73904017172892] = {
         name = "Roll In A Cart", 
         url = "https://raw.githubusercontent.com/Ap6ykx3/AP6-HUB/main/Roll%20In%20A%20Cart%20(SIMPLE%20AUTO%20CASH).lua"
@@ -9,14 +9,14 @@ local GameData = {
         name = "Millionaire Empire Tycoon", 
         url = "https://raw.githubusercontent.com/Ap6ykx3/APHUB-Millonaire-Empire-Tycoon/main/Millonaire%20Empire%20Tycoon.lua",
         onExecute = function()
-            AP6:Notify("INJECTION", "Millionaire Tycoon Scripts Loaded!", 5)
+            AP6:Notify("SYSTEM", "Universal OS Injection Ready.", 5)
         end
     },
     [130850206307448] = {
         name = "Blox Flipper", 
         url = "https://raw.githubusercontent.com/Ap6ykx3/APHUB-BloxFlipper/main/BloxFlipper.lua",
-        Maintenance = true -- Saldrá con bolita naranja
+        Maintenance = false
     }
 }
 
-AP6:Init(GameData)
+AP6:Init(Database)
