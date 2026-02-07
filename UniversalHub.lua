@@ -1,5 +1,5 @@
 -- UNIVERSAL HUB (este es el único script que ejecutas)
-local AP6 = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ap6ykx3/AP6Library/main/AP6Library.lua"))()
+local AP6 = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ap6ykx3/AP6Library/refs/heads/main/AP6Library.lua"))()
 
 local supportedGames = {
     [73904017172892] = { name = "Roll In A Cart", status = "Ready", url = "https://raw.githubusercontent.com/Ap6ykx3/AP6-HUB/main/Roll%20In%20A%20Cart%20(SIMPLE%20AUTO%20CASH).lua" },
