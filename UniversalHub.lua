@@ -1,5 +1,3 @@
---// Main Loader
-
 local AP6 = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ap6ykx3/AP6Library/refs/heads/main/AP6Library.lua"))()
 
 local games = {
