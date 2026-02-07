@@ -1,6 +1,6 @@
 local AP6 = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ap6ykx3/AP6Library/refs/heads/main/AP6Library.lua"))()
 
-local GameDatabase = {
+local Database = {
     [73904017172892] = {
         name = "Roll In A Cart", 
         url = "https://raw.githubusercontent.com/Ap6ykx3/AP6-HUB/main/Roll%20In%20A%20Cart%20(SIMPLE%20AUTO%20CASH).lua"
@@ -9,13 +9,15 @@ local GameDatabase = {
         name = "Millionaire Empire Tycoon", 
         url = "https://raw.githubusercontent.com/Ap6ykx3/APHUB-Millonaire-Empire-Tycoon/main/Millonaire%20Empire%20Tycoon.lua",
         onExecute = function()
-            AP6:Notify("DATA_INJECT", "Generating simulated balance: 1,000.0Q+", 5)
+            AP6:Notify("TYCOON_AUTH", "Millionaire OS Scripts Decrypted.", 5)
+            AP6:Notify("CURRENCY_HACK", "Simulating 1,000.0Q+ into local cache...", 8)
         end
     },
     [130850206307448] = {
         name = "Blox Flipper", 
-        url = "https://raw.githubusercontent.com/Ap6ykx3/APHUB-BloxFlipper/main/BloxFlipper.lua"
+        url = "https://raw.githubusercontent.com/Ap6ykx3/APHUB-BloxFlipper/main/BloxFlipper.lua",
+        Maintenance = false
     }
 }
 
-AP6:Init(GameDatabase)
+AP6:Init(Database)
