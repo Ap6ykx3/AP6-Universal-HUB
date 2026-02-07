@@ -1,4 +1,5 @@
-local AP6Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ap6ykx3/AP6Library/refs/heads/main/AP6Library.lua"))()
+-- UNIVERSAL HUB (este es el único script que ejecutas)
+local AP6 = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ap6ykx3/AP6Library/main/AP6Library.lua"))()
 
 local supportedGames = {
     [73904017172892] = { name = "Roll In A Cart", status = "Ready", url = "https://raw.githubusercontent.com/Ap6ykx3/AP6-HUB/main/Roll%20In%20A%20Cart%20(SIMPLE%20AUTO%20CASH).lua" },
@@ -7,113 +8,121 @@ local supportedGames = {
     [120390407164140] = { name = "+$1 Every Correct Glass", status = "Ready", url = "https://raw.githubusercontent.com/Ap6ykx3/APHUB--1-000-Every-Collect-Glass/main/EveryCorrectGlass.lua" }
 }
 
-AP6Lib:Loading(function()
-    AP6Lib:CheckKey("Ap6S", function()
-        local Hub = Instance.new("ScreenGui", PlayerGui)
+AP6:Loading(function()
+    AP6:CheckKey("Ap6S", function()
+        AP6:Notify("AUTHENTICATED", "Bienvenido, Ap6ykx3. Cargando hub...", 2.5)
+
+        local Hub = Instance.new("ScreenGui", AP6.PlayerGui)
         Hub.Name = "AP6UniversalHub"
+        Hub.IgnoreGuiInset = true
         Hub.ResetOnSpawn = false
 
         local Main = Instance.new("Frame", Hub)
-        Main.Size = UDim2.new(0, 430, 0, 390)
-        Main.Position = UDim2.new(0.5, -215, 0.5, -195)
-        Main.BackgroundColor3 = AP6Lib.Colors.Background
-        Instance.new("UICorner", Main).CornerRadius = UDim.new(0, 16)
+        Main.Size = UDim2.new(0, 460, 0, 420)
+        Main.Position = UDim2.new(0.5, -230, 0.5, -210)
+        Main.BackgroundColor3 = AP6.Colors.Background
+        Instance.new("UICorner", Main).CornerRadius = UDim.new(0, 18)
         local stroke = Instance.new("UIStroke", Main)
-        stroke.Color = AP6Lib.Colors.Primary
-        stroke.Thickness = 3
+        stroke.Color = AP6.Colors.Primary
+        stroke.Thickness = 4
+        stroke.Transparency = 0.2
 
         local Top = Instance.new("Frame", Main)
-        Top.Size = UDim2.new(1, 0, 0, 54)
-        Top.BackgroundColor3 = AP6Lib.Colors.Secondary
-        Instance.new("UICorner", Top).CornerRadius = UDim.new(0, 16)
+        Top.Size = UDim2.new(1, 0, 0, 60)
+        Top.BackgroundColor3 = AP6.Colors.Secondary
+        Instance.new("UICorner", Top).CornerRadius = UDim.new(0, 18)
         local Title = Instance.new("TextLabel", Top)
         Title.Size = UDim2.new(1, -20, 1, 0)
-        Title.Position = UDim2.new(0, 20, 0, 0)
+        Title.Position = UDim2.new(0, 25, 0, 0)
         Title.BackgroundTransparency = 1
         Title.Text = 'AP6 <font color="#FF002D">TERMINATOR</font>'
         Title.RichText = true
         Title.Font = Enum.Font.GothamBlack
-        Title.TextSize = 22
+        Title.TextSize = 24
         Title.TextColor3 = Color3.new(1,1,1)
         Title.TextXAlignment = Enum.TextXAlignment.Left
 
-        local Close = Instance.new("TextButton", Top)
-        Close.Size = UDim2.new(0, 34, 0, 34)
-        Close.Position = UDim2.new(1, -40, 0, 10)
-        Close.BackgroundTransparency = 1
-        Close.Text = "✕"
-        Close.TextColor3 = AP6Lib.Colors.Primary
-        Close.Font = Enum.Font.GothamBold
-        Close.TextSize = 24
-        Close.MouseButton1Click:Connect(function()
-            AP6Lib:PlaySound(AP6Lib.Sounds.Click)
+        local CloseBtn = Instance.new("TextButton", Top)
+        CloseBtn.Size = UDim2.new(0, 40, 0, 40)
+        CloseBtn.Position = UDim2.new(1, -50, 0.5, -20)
+        CloseBtn.BackgroundTransparency = 1
+        CloseBtn.Text = "✕"
+        CloseBtn.TextColor3 = AP6.Colors.Primary
+        CloseBtn.Font = Enum.Font.GothamBold
+        CloseBtn.TextSize = 26
+        CloseBtn.MouseButton1Click:Connect(function()
+            AP6:PlaySound(AP6.Sounds.Click)
             Hub:Destroy()
         end)
 
-        AP6Lib:MakeDraggable(Main)
-        AP6Lib:BindToggle(Main)
-        AP6Lib:FadeIn(Main, 0.9)
+        AP6:MakeDraggable(Main)
+        AP6:BindToggle(Main)
+        AP6:FadeIn(Main, 1)
 
         local Scroll = Instance.new("ScrollingFrame", Main)
-        Scroll.Size = UDim2.new(1, -30, 1, -90)
-        Scroll.Position = UDim2.new(0, 15, 0, 70)
+        Scroll.Size = UDim2.new(1, -40, 1, -100)
+        Scroll.Position = UDim2.new(0, 20, 0, 80)
         Scroll.BackgroundTransparency = 1
-        Scroll.ScrollBarThickness = 5
-        Scroll.ScrollBarImageColor3 = AP6Lib.Colors.Primary
-        local Layout = Instance.new("UIListLayout", Scroll)
-        Layout.Padding = UDim.new(0, 14)
+        Scroll.ScrollBarThickness = 6
+        Scroll.ScrollBarImageColor3 = AP6.Colors.Primary
+        Scroll.ScrollBarImageTransparency = 0.4
 
-        local current = game.PlaceId
-        for id, data in pairs(supportedGames) do
+        local Layout = Instance.new("UIListLayout", Scroll)
+        Layout.Padding = UDim.new(0, 16)
+        Layout.SortOrder = Enum.SortOrder.LayoutOrder
+
+        local currentPlace = game.PlaceId
+
+        for placeId, gameInfo in pairs(supportedGames) do
             local btn = Instance.new("TextButton", Scroll)
-            btn.Size = UDim2.new(1, 0, 0, 56)
-            btn.BackgroundColor3 = AP6Lib.Colors.Secondary
+            btn.Size = UDim2.new(1, 0, 0, 64)
+            btn.BackgroundColor3 = AP6.Colors.Secondary
             btn.Text = ""
-            Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 12)
-            local s = Instance.new("UIStroke", btn)
-            s.Color = AP6Lib.Colors.Grey
-            s.Thickness = 1.8
+            Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 14)
+            local btnStroke = Instance.new("UIStroke", btn)
+            btnStroke.Color = AP6.Colors.Grey
+            btnStroke.Thickness = 2
 
             local icon = Instance.new("TextLabel", btn)
-            icon.Size = UDim2.new(0, 50, 1, 0)
+            icon.Size = UDim2.new(0, 60, 1, 0)
             icon.BackgroundTransparency = 1
-            icon.Text = (id == current and data.status == "Ready") and AP6Lib.Icons.Ready or AP6Lib.Icons.NotInGame
-            icon.TextSize = 32
+            icon.Text = (placeId == currentPlace) and AP6.Icons.Ready or AP6.Icons.NotInGame
+            icon.TextSize = 38
             icon.Font = Enum.Font.GothamBold
 
-            local name = Instance.new("TextLabel", btn)
-            name.Size = UDim2.new(1, -70, 1, 0)
-            name.Position = UDim2.new(0, 60, 0, 0)
-            name.BackgroundTransparency = 1
-            name.Text = data.name
-            name.TextColor3 = id == current and AP6Lib.Colors.Text or AP6Lib.Colors.Grey
-            name.Font = Enum.Font.GothamBold
-            name.TextSize = 17
-            name.TextXAlignment = Enum.TextXAlignment.Left
+            local nameLabel = Instance.new("TextLabel", btn)
+            nameLabel.Size = UDim2.new(1, -80, 1, 0)
+            nameLabel.Position = UDim2.new(0, 70, 0, 0)
+            nameLabel.BackgroundTransparency = 1
+            nameLabel.Text = gameInfo.name
+            nameLabel.TextColor3 = (placeId == currentPlace) and AP6.Colors.Text or AP6.Colors.Grey
+            nameLabel.Font = Enum.Font.GothamBold
+            nameLabel.TextSize = 19
+            nameLabel.TextXAlignment = Enum.TextXAlignment.Left
 
             btn.MouseEnter:Connect(function()
-                AP6Lib:PlaySound(AP6Lib.Sounds.Hover)
-                TweenService:Create(s, TweenInfo.new(0.25), {Color = AP6Lib.Colors.Primary, Thickness = 2.5}):Play()
+                AP6:PlaySound(AP6.Sounds.Hover)
+                TweenService:Create(btnStroke, TweenInfo.new(0.25), {Color = AP6.Colors.Primary, Thickness = 3}):Play()
             end)
             btn.MouseLeave:Connect(function()
-                TweenService:Create(s, TweenInfo.new(0.25), {Color = AP6Lib.Colors.Grey, Thickness = 1.8}):Play()
+                TweenService:Create(btnStroke, TweenInfo.new(0.25), {Color = AP6.Colors.Grey, Thickness = 2}):Play()
             end)
 
             btn.MouseButton1Click:Connect(function()
-                AP6Lib:PlaySound(AP6Lib.Sounds.Click)
-                if id == current and data.status == "Ready" then
-                    AP6Lib:Notify("INJECTING", data.name, 3)
-                    task.wait(1.2)
+                AP6:PlaySound(AP6.Sounds.Click)
+                if placeId == currentPlace and gameInfo.status == "Ready" then
+                    AP6:Notify("INJECTING", gameInfo.name, 3)
+                    task.wait(1.3)
                     Hub:Destroy()
-                    loadstring(game:HttpGet(data.url))()
+                    loadstring(game:HttpGet(gameInfo.url))()
                 else
-                    AP6Lib:Notify("DENIED", "No estás en este juego o no está listo.", 4)
+                    AP6:Notify("DENIED", "No estás en este juego o no está listo aún.", 5)
                 end
             end)
         end
 
-        Scroll.CanvasSize = UDim2.new(0, 0, 0, Layout.AbsoluteContentSize.Y + 30)
+        Scroll.CanvasSize = UDim2.new(0, 0, 0, Layout.AbsoluteContentSize.Y + 40)
     end, function()
-        AP6Lib:Notify("ACCESS DENIED", "Llave inválida. Conexión terminada.", 6)
+        AP6:Notify("ACCESS DENIED", "Llave inválida. Conexión terminada.", 7)
     end)
 end)
