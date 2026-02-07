@@ -4,7 +4,7 @@ local supportedGames = {
     [73904017172892] = {
         name = "Roll In A Cart",
         status = "Ready",
-        url = "https://raw.githubusercontent.com/Ap6ykx3/AP6-HUB/main/RollInACart.lua"
+        url = "https://raw.githubusercontent.com/Ap6ykx3/AP6-HUB/main/Roll%20In%20A%20Cart%20(SIMPLE%20AUTO%20CASH).lua"
     },
     [222222222] = {name = "AnotherGame", status = "Developing.."},
     [333333333] = {name = "CoolAdventure", status = "Developing.."},
@@ -23,7 +23,6 @@ local supportedGames = {
 }
 
 local currentGame = game.PlaceId
-local gameInfo = supportedGames[currentGame]
 
 local Window = Rayfield:CreateWindow({
     Name = "AP6 Universal Hub",
@@ -33,26 +32,43 @@ local Window = Rayfield:CreateWindow({
 
 local GamesTab = Window:CreateTab("Games")
 
-if gameInfo then
-    local Section = GamesTab:CreateSection("Game detected: " .. gameInfo.name .. " (ID: " .. currentGame .. ")")
-    Section:CreateButton({
-        Name = "Load " .. gameInfo.name .. " Script",
+
+for id, info in pairs(supportedGames) do
+    local statusIcon = "🔘"
+    local displayName = info.name .. " - " .. info.status
+
+    if id == currentGame then
+        statusIcon = "🟢"
+        displayName = info.name .. " - Detected"
+    end
+
+    GamesTab:CreateButton({
+        Name = statusIcon .. " " .. displayName,
         Callback = function()
-            if gameInfo.status == "Ready" and gameInfo.url then
-                loadstring(game:HttpGet(gameInfo.url))()
+            if id == currentGame and info.status == "Ready" and info.url then
+                
+                Rayfield:Destroy()
+                loadstring(game:HttpGet(info.url))()
             else
                 Rayfield:Notify({
                     Title = "AP6 Universal Hub",
-                    Content = gameInfo.name .. " is currently " .. gameInfo.status,
+                    Content = info.name .. " is currently " .. info.status,
                     Duration = 5
                 })
             end
         end
     })
-else
+end
+
+
+if not supportedGames[currentGame] then
     Rayfield:Notify({
         Title = "AP6 Universal Hub",
         Content = "Game not detected",
         Duration = 5
     })
 end
+
+
+local CreditsTab = Window:CreateTab("Credits")
+CreditsTab:CreateSection("Developed by Ap6ykx3")
