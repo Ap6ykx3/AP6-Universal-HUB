@@ -21,7 +21,7 @@ local supportedGames = {
     [567567567] = {name = "PirateWars", status = "Developing.."},
     [678678678] = {name = "RoyalBattle", status = "Developing.."}
 }
-
+--:3
 local currentGame = game.PlaceId
 local gameInfo = supportedGames[currentGame]
 
