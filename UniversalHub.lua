@@ -9,7 +9,7 @@ local Database = {
         name = "Millionaire Empire Tycoon", 
         url = "https://raw.githubusercontent.com/Ap6ykx3/APHUB-Millonaire-Empire-Tycoon/main/Millonaire%20Empire%20Tycoon.lua",
         onExecute = function()
-            Library:Notify("SYSTEM", "Universal OS Injection Ready.")
+            Library:Notify("SYSTEM", "Universal OS Injection Ready.", "Info", 3)
         end
     },
     [130850206307448] = {
@@ -20,7 +20,7 @@ local Database = {
 }
 
 Library:Boot(function()
-    local Window = Library:Window("AP6 HUB // UNIVERSAL", Color3.fromRGB(0, 255, 255), Enum.KeyCode.RightControl)
+    local Window = Library:Window("AP6 HUB // UNIVERSAL", "Cyber", Enum.KeyCode.RightControl)
     local Tab = Window:Tab("Game Selection")
 
     for id, data in pairs(Database) do
@@ -37,15 +37,19 @@ Library:Boot(function()
                     data.onExecute() 
                 end
                 
-                Library:Notify("SUCCESS", "Module injected: " .. data.name)
+                Library:Notify("SUCCESS", "Module injected: " .. data.name, "Success", 3)
             else
-                Library:Notify("ACCESS DENIED", "Please join the correct game.")
+                Library:Notify("ACCESS DENIED", "Please join the correct game.", "Error", 3)
             end
         end)
     end
 
     local Settings = Window:Tab("Settings")
     Settings:Button("Destroy UI", function()
-        game.CoreGui:FindFirstChild("AP6_UI"):Destroy()
+        for _, gui in pairs(game.CoreGui:GetChildren()) do
+            if gui.Name:find("AP6") then
+                gui:Destroy()
+            end
+        end
     end)
 end)
